@@ -1,0 +1,19 @@
+services:
+  monitor-cpu-ram-hdd:
+    build: ./build
+    container_name: monitor-cpu-ram-hdd
+    restart: always
+    env_file: .env  # Tham chiếu đến file .env chứa các biến môi trường
+    networks:
+      - monitor-cpu-ram-hdd
+    deploy:
+      resources:
+        limits:
+          memory: 20M # giới hạn dùng tối đa 20 MB RAM
+          cpus: '0.1' # giới hạn dùng tối đa 10% của 1 vCPU, trung bình dùng khoảng <1% CPU    
+    volumes:
+      - ./data:/app/data  # Ánh xạ thư mục dữ liệu vào container
+networks:
+  monitor-cpu-ram-hdd:
+    driver: "bridge"
+    name: monitor-cpu-ram-hdd
